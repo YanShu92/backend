@@ -91,18 +91,22 @@ VALUES (1, 1, 2, 1), (1, 2, 1, 1), (2, 3, 1, 3), (3, 4, 1, 2), (3, 2, 2, 2);
 -- Trạng thái đơn hàng
 -- Thời gian đặt hàng
 
-SELECT customers.name, customers.email, customers.phone, SUM(orders.quantity) AS total_quantity, 
-	SUM(products.price * orders.quantity) AS total_price, status.name AS status_orders, orders.created_at
+SELECT customers.name, customers.email, customers.phone, total_quantity, total_price, 
+	status_orders, orders_created_at
 FROM customers
-INNER JOIN orders
-ON customers.id = orders.customer_id
-INNER JOIN products
-ON products.id = orders.product_id
-INNER JOIN status
-ON orders.status_id = status.id
-GROUP BY customers.name, customers.email, customers.phone, orders.quantity, 
-	status_orders, orders.created_at;
-
+RIGHT JOIN 
+(
+	-- Bảng tạm
+	SELECT orders.customer_id, SUM(orders.quantity) AS total_quantity, 
+	SUM(products.price * orders.quantity) AS total_price, status.name AS status_orders,  orders.created_at as orders_created_at
+	FROM orders
+	INNER JOIN products
+	ON products.id = orders.product_id
+	INNER JOIN status
+	ON orders.status_id = status.id
+	GROUP BY orders.customer_id, status_orders, orders.created_at
+) as temp_table
+ON temp_table.customer_id = customers.id
 
 -- 4.2: Xem chi tiết đơn hàng:
 -- Tên khách hàng
