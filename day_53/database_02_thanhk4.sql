@@ -106,7 +106,7 @@ RIGHT JOIN
 	ON orders.status_id = status.id
 	GROUP BY orders.customer_id, status_orders, orders.created_at
 ) as temp_table
-ON temp_table.customer_id = customers.id
+ON temp_table.customer_id = customers.id;
 
 -- 4.2: Xem chi tiết đơn hàng:
 -- Tên khách hàng
@@ -130,7 +130,7 @@ INNER JOIN status
 ON orders.status_id = status.id
 GROUP BY customers.name, customers.email, customers.phone, orders.quantity, 
 	product_name, products.product_code, product_price, product_quantity,
-	status_orders, orders.created_at, orders.updated_at
+	status_orders, orders.created_at, orders.updated_at;
 
 		
 
