@@ -3,6 +3,6 @@ module.exports = {
     if (!req.session.authorized) {
       return res.redirect("/auth/dang-nhap");
     }
-    res.render("home/index");
+    res.render("home/index", { req });
   },
 };

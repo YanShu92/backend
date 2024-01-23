@@ -3,6 +3,8 @@
 <div class="alert alert-danger mb-2"><%= msg %></div>
 <% } %> <% if (msgLogout.length) { %>
 <div class="alert alert-success mb-2"><%= msgLogout %></div>
+<% } %> <% if (msgRegister.length) { %>
+<div class="alert alert-success mb-2"><%= msgRegister %></div>
 <% } %>
 <form action="" method="post">
   <div class="mb-3">
@@ -28,6 +30,9 @@
     />
     <span class="text-danger fst-italic"><%= req.errors.password %></span>
   </div>
-
+  <span class="d-flex justify-content-end fst-italic mb-2"
+    >Bạn chưa có tài khoản,
+    <a class="text-danger fw-bold" href="/auth/dang-ky"> Đăng ký ngay!</a></span
+  >
   <button class="btn btn-primary w-100">Đăng nhập</button>
 </form>

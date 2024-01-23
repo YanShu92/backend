@@ -1,5 +1,9 @@
 <h1>Trang chủ</h1>
-<p>Chào mừng bạn, Hoàng Thanh</p>
+<p>
+  Chào mừng bạn,
+  <span class="fw-bold fst-italic"><%= req?.session?.User?.name %></span>
+</p>
+<p>Chúc bạn ngày mới tốt lành, có những trải nghiệm tốt bên chúng tôi</p>
 <button class="btn btn-primary">
   <a href="/auth/dang-xuat" class="text-white">Đăng xuất</a>
 </button>
