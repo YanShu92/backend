@@ -32,6 +32,12 @@ module.exports = {
           return res.redirect("/auth/dang-nhap");
         }
 
+        if (user.status !== 1) {
+          req.flash("msg", "Bạn cần phải là admin mới được truy cập");
+          req.flash("old", req.body);
+          return res.redirect("/auth/dang-nhap");
+        }
+
         req.session.User = {
           name: user.name,
           status: "success",
