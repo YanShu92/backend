@@ -87,11 +87,6 @@ module.exports = {
           status: 0,
         });
         req.flash("registerSuccess", "Bạn đã đăng ký thành công");
-
-        // if (body.loginRemember === "on") {
-        //   req.flash("old", body);
-        //   req.flash("registerSuccess", "Bạn đã đăng kí thành công");
-        // }
         return res.redirect("/auth/dang-nhap");
       }
       req.flash("msg", "Có lỗi xảy ra, đăng kí thất bại!");
