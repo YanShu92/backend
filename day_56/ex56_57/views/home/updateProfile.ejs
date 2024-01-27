@@ -1,0 +1,71 @@
+<div class="row mt-3">
+  <div class="col-3">
+    <div class="list-group">
+      <a
+        href="/"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-gauge"></i>
+        <span class="menu-collapsed">Home</span>
+      </a>
+
+      <a
+        href="/update-profile"
+        class="list-group-item list-group-item-action active d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-user"></i>
+        <span class="menu-collapsed">Update profile</span>
+      </a>
+
+      <a
+        href="/change-password"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-lock"></i>
+        <span class="menu-collapsed">Change password</span>
+      </a>
+
+      <a
+        href="/auth/dang-xuat"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span class="menu-collapsed">Logout</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-9">
+    <h1 class="text-center mb-4">Update profile</h1>
+    <% if (msg.length) { %>
+    <div class="alert alert-success mb-2"><%= msg %></div>
+    <% } %> <% if (msgFail.length) { %>
+    <div class="alert alert-danger mb-2"><%= msgFail %></div>
+    <% } %>
+    <form action="" method="post">
+      <div class="mb-3">
+        <label for="" class="fw-bold">Tên</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="Tên...."
+          value="<%= req?.session?.User?.name %>"
+        />
+        <span class="text-danger fst-italic"><%= req.errors.name %></span>
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="fw-bold">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          name="email"
+          placeholder="Email...."
+          value="<%= req?.session?.User?.email %>"
+        />
+        <span class="text-danger fst-italic"><%= req.errors.email %></span>
+      </div>
+      <button class="btn btn-primary fw-bold">Save</button>
+    </form>
+  </div>
+</div>

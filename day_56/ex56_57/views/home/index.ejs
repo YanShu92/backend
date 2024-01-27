@@ -1,9 +1,45 @@
-<h1>Trang chủ</h1>
-<p>
-  Chào mừng bạn,
-  <span class="fw-bold fst-italic"><%= req?.session?.User?.name %></span>
-</p>
-<p>Chúc bạn ngày mới tốt lành, có những trải nghiệm tốt bên chúng tôi</p>
-<button class="btn btn-primary">
-  <a href="/auth/dang-xuat" class="text-white">Đăng xuất</a>
-</button>
+<div class="row mt-3">
+  <div class="col-3">
+    <div class="list-group">
+      <a
+        href="/"
+        class="list-group-item list-group-item-action active d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-gauge"></i>
+        <span class="menu-collapsed">Home</span>
+      </a>
+
+      <a
+        href="/update-profile"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-user"></i>
+        <span class="menu-collapsed">Update profile</span>
+      </a>
+
+      <a
+        href="/change-password"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-lock"></i>
+        <span class="menu-collapsed">Change password</span>
+      </a>
+
+      <a
+        href="/auth/dang-xuat"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span class="menu-collapsed">Logout</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-9">
+    <h1>Trang chủ</h1>
+    <p>
+      Chào mừng bạn,
+      <span class="fw-bold fst-italic"><%= req?.session?.User?.name %></span>
+    </p>
+    <p>Chúc bạn ngày mới tốt lành, có những trải nghiệm tốt bên chúng tôi</p>
+  </div>
+</div>

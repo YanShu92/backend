@@ -2,6 +2,8 @@
 const { User } = require("../models/index");
 const { string } = require("yup");
 const bcrypt = require("bcrypt");
+const DeviceDetector = require("node-device-detector");
+const ClientHints = require("node-device-detector/client-hints");
 
 module.exports = {
   login: async (req, res) => {
@@ -33,13 +35,52 @@ module.exports = {
         }
 
         if (user.status !== 1) {
-          req.flash("msg", "Bạn cần phải là admin mới được truy cập");
+          req.flash("msg", "Bạn cần được cấp quyền mới được truy cập");
           req.flash("old", req.body);
           return res.redirect("/auth/dang-nhap");
         }
 
+        //detect device đăng nhập:
+        // 1. option tạo 1 object detector
+        const detector = new DeviceDetector({
+          clientIndexes: true,
+          deviceIndexes: true,
+          deviceAliasCode: false,
+        });
+        const clientHints = new ClientHints();
+        // 2. getter client from server
+        const userAgent = req.headers["user-agent"];
+        const clientHintsData = clientHints.parse(req.headers);
+        // 3. detect user agent vào object
+        const result = detector.detect(userAgent);
+        console.log("result:", result);
+        console.log("clientHint:", clientHintsData);
+        // result
+        // {
+        //   os: {
+        //     name: 'Windows',
+        //     short_name: 'WIN',
+        //     version: '10',
+        //     platform: 'x64',
+        //     family: 'Windows'
+        //   },
+        //   client: {
+        //     type: 'browser',
+        //     name: 'Chrome',
+        //     short_name: 'CH',
+        //     version: '120.0.0.0',
+        //     engine: 'Blink',
+        //     engine_version: '120.0.0.0',
+        //     family: 'Chrome'
+        //   },
+        //   device: { id: '', type: 'desktop', brand: '', model: '' }
+        // }
+
+        // req session đăng nhập
         req.session.User = {
           name: user.name,
+          id: user.id,
+          email: user.email,
           status: "success",
           isLogin: true,
         };
