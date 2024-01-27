@@ -1,5 +1,5 @@
 // const
-const { User } = require("../models/index");
+const { User, Device } = require("../models/index");
 const { string } = require("yup");
 const bcrypt = require("bcrypt");
 const DeviceDetector = require("node-device-detector");
@@ -54,7 +54,7 @@ module.exports = {
         // 3. detect user agent vào object
         const result = detector.detect(userAgent);
         console.log("result:", result);
-        console.log("clientHint:", clientHintsData);
+        // console.log("clientHint:", clientHintsData);
         // result
         // {
         //   os: {
@@ -75,6 +75,43 @@ module.exports = {
         //   },
         //   device: { id: '', type: 'desktop', brand: '', model: '' }
         // }
+
+        // 4. nhập dữ liệu vào bảng user_device
+        // Mindset: thiết bị đăng nhập -> đưa vào bảng
+        // đã tồn tại thì cập nhật lại thời gian login
+        // 4.1 kiểm tra user đã đăng nhập trên thiết bị này chưa
+        const checkDevice = await Device.findOne({
+          where: {
+            user_id: user.id,
+            user_agent: userAgent,
+          },
+        });
+        console.log(checkDevice);
+        // 4.2 Đã tồn tại thì update, chưa thì thêm vào bảng
+        if (checkDevice) {
+          await Device.update(
+            {
+              login_time: "now()",
+              is_login: true,
+            },
+            {
+              where: {
+                user_id: user.id,
+                user_agent: userAgent,
+              },
+            }
+          );
+        } else {
+          await Device.create({
+            user_id: user.id,
+            os_name: result.os.name,
+            client_type: result.client.type,
+            client_family: result.client.family,
+            device_type: result.device.type,
+            user_agent: userAgent,
+            is_login: true,
+          });
+        }
 
         // req session đăng nhập
         req.session.User = {
@@ -146,10 +183,53 @@ module.exports = {
   logout: async (req, res) => {
     delete req.session.authorized;
     delete req.session.User;
+    const userAgent = req.headers["user-agent"];
+    // update time logout device
+    await Device.update(
+      {
+        logout_time: "now()",
+        is_login: false,
+      },
+      {
+        where: {
+          user_agent: userAgent,
+        },
+      }
+    );
     req.flash("msgLogout", "Đăng xuất thành công");
-    // destroy thì mất flash
+    // Becare: destroy thì mất flash
     // destroy phải để sau flash nếu không fail
     // req.session.destroy();
     return res.redirect("/auth/dang-nhap");
+  },
+
+  logoutOneDevice: async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    await Device.update(
+      {
+        logout_time: "now()",
+        is_login: false,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+
+    // check thiết bị
+    const userAgent = req.headers["user-agent"];
+    const checkDevice = await Device.findOne({
+      where: {
+        id: id,
+        user_agent: userAgent,
+      },
+    });
+    console.log(checkDevice);
+    if (checkDevice) {
+      return res.redirect("/auth/dang-nhap");
+    }
+    return res.redirect("/auth/manage-device");
   },
 };

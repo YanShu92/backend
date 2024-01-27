@@ -1,10 +1,18 @@
-const { User } = require("../models/index");
+const { User, Device } = require("../models/index");
 const { Op } = require("sequelize");
 const { string } = require("yup");
 const bcrypt = require("bcrypt");
 
 module.exports = {
-  index: (req, res, next) => {
+  index: async (req, res, next) => {
+    const userAgent = req.headers["user-agent"];
+    // const checkDevice = await Device.findOne({
+    //   where: {
+    //     user_id: req.session.User.id,
+    //     user_agent: userAgent,
+    //   },
+    // });
+
     if (!req.session.authorized) {
       return res.redirect("/auth/dang-nhap");
     }
@@ -110,10 +118,22 @@ module.exports = {
           }
         );
         req.flash("msg", "Đổi mật khẩu thành công");
+        return res.redirect("/dang-xuat");
       } catch (e) {
         return next(e);
       }
     }
     return res.redirect("/change-password");
+  },
+
+  manageDevice: async (req, res, next) => {
+    let devices = await Device.findAll({
+      where: {
+        user_id: req.session.User.id,
+      },
+    });
+    devices = devices.map((device) => device.dataValues);
+    console.log(devices);
+    res.render("home/manageDevice", { req, devices });
   },
 };

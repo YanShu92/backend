@@ -10,4 +10,6 @@ router.post("/update-profile", homeController.handleUpdate);
 router.get("/change-password", homeController.changePassword);
 router.post("/change-password", homeController.handleChangePassword);
 
+router.get("/manage-device", homeController.manageDevice);
+
 module.exports = router;
