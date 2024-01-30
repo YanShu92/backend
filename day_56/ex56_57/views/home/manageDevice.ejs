@@ -58,7 +58,7 @@
         <div class="col-4 my-auto">
           <% if (device.is_login) { %>
           <form
-            action="/dang-xuat/<%= device.id %>"
+            action="/auth/dang-xuat/<%= device.id %>"
             method="post"
             onsubmit="return confirm('Bạn chắc chắn đăng xuất thiết bị này không?')"
           >

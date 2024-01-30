@@ -1,0 +1,70 @@
+<div class="row mt-3">
+  <div class="col-3">
+    <div class="list-group">
+      <a
+        href="/"
+        class="list-group-item list-group-item-action active d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-pen"></i>
+        <span class="menu-collapsed">Compose</span>
+      </a>
+
+      <a
+        href="/mail/histories"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-paper-plane"></i>
+        <span class="menu-collapsed">Sent</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-9">
+    <h1 class="text-center">Gửi email - trao yêu thương</h1>
+    <% if (sendSuccess.length) { %>
+    <div class="alert alert-success mb-2"><%= sendSuccess %></div>
+    <% } %> <% if (msgFail.length) { %>
+    <div class="alert alert-danger mb-2"><%= msgFail %></div>
+    <% } %>
+    <form action="" method="post">
+      <div class="mb-3">
+        <label for="" class="fw-bold">Recipients</label>
+        <input
+          type="text"
+          class="form-control"
+          name="recipient"
+          placeholder="username@gmail.com...."
+          value="<%= req.old.recipient %>"
+        />
+        <span class="text-danger fst-italic"><%= req.errors.recipient %></span>
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="fw-bold">Subject</label>
+        <input
+          type="text"
+          class="form-control"
+          name="subject"
+          placeholder="Tiêu đề...."
+          value="<%= req.old.subject %>"
+        />
+        <span class="text-danger fst-italic"><%= req.errors.subject %></span>
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="fw-bold">Message</label>
+        <input
+          type="text"
+          class="form-control"
+          name="message"
+          placeholder="Nội dung...."
+          value="<%= req.old.message %>"
+        />
+        <span class="text-danger fst-italic"><%= req.errors.message %></span>
+      </div>
+      <button class="btn btn-primary fw-bold">Send</button>
+    </form>
+    <p class="text-center fst-italic">
+      Chúc bạn ngày mới tốt lành, có những trải nghiệm tốt bên chúng tôi
+    </p>
+  </div>
+</div>

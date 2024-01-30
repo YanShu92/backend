@@ -1,0 +1,63 @@
+<div class="row mt-3">
+  <div class="col-3">
+    <div class="list-group">
+      <a
+        href="/mail"
+        class="list-group-item list-group-item-action d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-pen"></i>
+        <span class="menu-collapsed">Compose</span>
+      </a>
+
+      <a
+        href="/mail/histories"
+        class="list-group-item list-group-item-action active d-flex w-100 justify-content-start align-items-center gap-3"
+      >
+        <i class="fa-solid fa-paper-plane"></i>
+        <span class="menu-collapsed">Sent</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-9">
+    <h1 class="text-center mb-3">Lịch sử gửi tin nhắn</h1>
+    <h5 class="fst-italic">
+      Tổng cộng có <span class="text-danger"><%= histories.length %></span> tin
+      nhắn
+    </h5>
+    <ul class="list-group list-group-flush mb-3">
+      <% histories.forEach((history) => { %>
+      <li class="list-group-item d-flex">
+        <div class="col-8 d-flex flex-column">
+          <h5>Recipient: <%= history.recipient %></h5>
+          <span>Tiêu đề: <%= history.subject %></span>
+          <span
+            >Trạng thái: <%- history.status ? `<span class="badge bg-success">
+              Đã đọc</span
+            >` : `<span class="badge bg-primary"> Chưa đọc</span>` %></span
+          >
+          <span>Thời gian gửi: <%= history.created_at %></span>
+          <button
+            class="btn btn-primary mb-1 me-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#history<%= history.id %>"
+            aria-expanded="false"
+            aria-controls="history<%= history.id %>"
+          >
+            Details
+            <i class="fa-solid fa-arrow-down"></i>
+          </button>
+          <div class="collapse" id="history<%= history.id %>">
+            <div class="card card-body">
+              <span>Nội dung: <%= history.message %></span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <% }) %>
+    </ul>
+    <p class="text-center fst-italic">
+      Chúc bạn ngày mới tốt lành, có những trải nghiệm tốt bên chúng tôi
+    </p>
+  </div>
+</div>

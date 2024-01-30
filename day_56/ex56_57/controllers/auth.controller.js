@@ -205,6 +205,7 @@ module.exports = {
 
   logoutOneDevice: async (req, res) => {
     const { id } = req.params;
+    console.log(req);
     console.log(id);
     await Device.update(
       {
