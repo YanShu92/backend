@@ -40,6 +40,13 @@ module.exports = {
   histories: async (req, res, next) => {
     let histories = await History.findAll();
     histories = histories.map((history) => history.dataValues);
+    // histories.map((history, index) => {
+    //   document
+    //     .querySelector(`.btn_check${index}`)
+    //     .addEventListener("click", () => {
+    //       console.log(1111);
+    //     });
+    // });
     res.render("mail/histories", { histories, req });
   },
 };

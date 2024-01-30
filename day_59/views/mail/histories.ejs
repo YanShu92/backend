@@ -25,8 +25,11 @@
       nhắn
     </h5>
     <ul class="list-group list-group-flush mb-3">
-      <% histories.forEach((history) => { %>
+      <% histories.forEach((history, index) => { %>
       <li class="list-group-item d-flex">
+        <div class="col-1 d-flex justify-content-center align-items-center">
+          <%= index + 1 %>
+        </div>
         <div class="col-8 d-flex flex-column">
           <h5>Recipient: <%= history.recipient %></h5>
           <span>Tiêu đề: <%= history.subject %></span>
@@ -37,7 +40,7 @@
           >
           <span>Thời gian gửi: <%= history.created_at %></span>
           <button
-            class="btn btn-primary mb-1 me-auto"
+            class="btn btn-primary mb-1 me-auto btn_check<%= history.id %>"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#history<%= history.id %>"
