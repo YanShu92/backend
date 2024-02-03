@@ -29,6 +29,11 @@ router.get(
   passport.authenticate("google", {
     failureFlash: true,
     failureRedirect: "/auth/login",
+    successRedirect: "/",
   })
 );
+
+router.get("/register", authController.register);
+router.post("/register", authController.handleRegister);
+
 module.exports = router;

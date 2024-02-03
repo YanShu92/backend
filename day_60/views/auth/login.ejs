@@ -2,6 +2,8 @@
   <h1 class="text-center">Đăng nhập</h1>
   <% if (error.length) { %>
   <div class="alert alert-danger text-center"><%= error %></div>
+  <% } %> <% if (msgRegister.length) { %>
+  <div class="alert alert-success mb-2"><%= msgRegister %></div>
   <% } %>
   <form action="" method="post">
     <div class="mb-3">

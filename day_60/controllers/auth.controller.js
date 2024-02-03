@@ -11,8 +11,59 @@ module.exports = {
       return res.redirect("/");
     }
     const error = req.flash("error");
+    const msgRegister = req.flash("registerSuccess");
 
-    res.render("auth/login", { error });
+    res.render("auth/login", { error, msgRegister });
+  },
+  register: (req, res) => {
+    const msg = req.flash("msg");
+    console.log(req.errors);
+    return res.render("auth/register", { req, msg });
+  },
+
+  handleRegister: async (req, res) => {
+    try {
+      const body = await req.validate(req.body, {
+        name: string().required("Tên bắt buộc phải nhập"),
+        email: string()
+          .required("Email bắt buộc phải nhập")
+          .email("Email không đúng định dạng")
+          .test("check-unique", "Email đã tồn tại", async (value) => {
+            //true -> pass
+            //false -> fail
+            const result = await User.findOne({
+              where: {
+                email: value,
+                provider_id: 1,
+              },
+            });
+            console.log(result);
+            return !result;
+          }),
+        password: string().required("Password bắt buộc phải nhập"),
+        reenterPassword: string()
+          .required("Nhập lại password")
+          .test("check-password", "Password nhập lại không khớp", (value) => {
+            return value === req.body.password;
+          }),
+      });
+      if (body) {
+        const password = bcrypt.hashSync(body.password, 10);
+
+        await User.create({
+          name: body.name,
+          email: body.email,
+          password,
+          provider_id: 1,
+        });
+        req.flash("registerSuccess", "Bạn đã đăng ký thành công");
+        return res.redirect("/auth/login");
+      }
+      req.flash("msg", "Có lỗi xảy ra, đăng kí thất bại!");
+      res.redirect("/auth/register");
+    } catch (e) {
+      console.log(e);
+    }
   },
   forgotPassword: (req, res) => {
     const msgFail = req.flash("msgFail");

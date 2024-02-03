@@ -1,11 +1,5 @@
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 const { User } = require("../models/index");
-
-console.log(
-  process.env.GOOGLE_CLIENTID,
-  process.env.GOOGLE_CALLBACKURL,
-  process.env.GOOGLE_CLIENTSECRET
-);
 module.exports = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENTID,
