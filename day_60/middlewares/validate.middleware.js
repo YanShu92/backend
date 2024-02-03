@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
       );
       req.flash("errors", errors);
       req.flash("old", data);
-      req.flash("msgFail", "Vui lòng nhập đầy đủ thông tin");
+      req.flash("msgFail", "Vui lòng nhập email đã đăng kí");
       console.log();
     }
   };

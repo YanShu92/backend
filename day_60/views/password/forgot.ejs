@@ -1,0 +1,28 @@
+<div class="w-50 mx-auto">
+  <h1 class="text-center">Quên mật khẩu</h1>
+  <% if (msgFail.length) { %>
+  <div class="alert alert-danger text-center"><%= msgFail %></div>
+  <% } %> <% if (msg.length) { %>
+  <div class="alert alert-success text-center"><%= msg %></div>
+  <% } %>
+  <form action="" method="post">
+    <div class="mb-3">
+      <label for="">Nhập email đã đăng kí</label>
+      <input
+        type="text"
+        class="form-control"
+        name="email"
+        placeholder="Email..."
+        value="<%= req?.old?.email %>"
+      />
+    </div>
+    <div class="d-grid">
+      <button class="btn btn-primary">Gửi email xác nhận</button>
+    </div>
+  </form>
+  <div class="d-grid">
+    <a class="btn btn-info mt-2" href="/auth/login" role="button"
+      >Về trang đăng nhập</a
+    >
+  </div>
+</div>

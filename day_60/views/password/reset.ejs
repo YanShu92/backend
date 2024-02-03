@@ -1,0 +1,41 @@
+<div class="w-50 mx-auto">
+  <h1 class="text-center">Reset password</h1>
+  <% if (msgFail.length) { %>
+  <div class="alert alert-danger text-center"><%= msgFail %></div>
+  <% } %> <% if (msg.length) { %>
+  <div class="alert alert-success text-center"><%= msg %></div>
+  <% } %>
+  <p class="text-danger fst-italic">
+    Xin chào <span class="fw-bold"><%= user.name %></span>. Vui lòng nhập thông
+    tin dưới để đổi mật khẩu
+  </p>
+  <form action="" method="post">
+    <div class="mb-3">
+      <label for="">Mật khẩu mới</label>
+      <input
+        type="password"
+        class="form-control"
+        name="newPassword"
+        placeholder="Nhập mật khẩu mới..."
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="">Nhập lại mật khẩu mới</label>
+      <input
+        type="password"
+        class="form-control"
+        name="reenterNewPassword"
+        placeholder="Nhập lại mật khẩu mới..."
+      />
+    </div>
+    <div class="d-grid">
+      <button class="btn btn-primary">Xác nhận đổi mật khẩu</button>
+    </div>
+  </form>
+  <div class="d-grid">
+    <a class="btn btn-info mt-2" href="/auth/login" role="button"
+      >Về trang đăng nhập</a
+    >
+  </div>
+</div>
