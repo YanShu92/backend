@@ -71,7 +71,7 @@ module.exports = {
     // console.log("host", req.get("host"));
     res.render("password/forgot", { msgFail, msg, req });
   },
-  handleForgotPassword: async (req, res) => {
+  handleForgotPassword: async (req, res, next) => {
     const body = req.body;
     const bodyValidate = await req.validate(body, {
       email: string()
